@@ -1,12 +1,12 @@
 system_name=`uname -s`
 
-if [ $system_name == 'Linux' ]; then
-  ls -1 --color=none /etc/bash_completion.d | while read f; do
-    . "$f"
-  done
-else
-  . /opt/local/etc/bash_completion
-fi
+#if [ $system_name == 'Linux' ]; then
+#  ls -1 --color=none /etc/bash_completion.d | while read f; do
+#    echo "$f"
+#  done
+#else
+#  . /opt/local/etc/bash_completion
+#fi
 
 export COLOR_NONE='\e[0m'
 export COLOR_WHITE='\e[1;37m'
