@@ -66,3 +66,5 @@ alias gitca='git commit -a -v'
 alias gitpushom='git push origin master'
 alias gitpullom='git pull origin master'
 
+bind "\C-p":history-search-backward
+bind "\C-n":history-search-forward
