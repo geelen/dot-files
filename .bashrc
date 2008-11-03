@@ -27,7 +27,7 @@ export COLOR_GRAY='\e[0;30m'
 export COLOR_LIGHT_GRAY='\e[0;37m'
 
 GIT_PIECE='$(__git_ps1 " \[${COLOR_RED}\]%s\[${COLOR_NONE}\]")'
-export PS1="\u\[${COLOR_GREEN}\]@\[${COLOR_NONE}\]\h \[${COLOR_GRAY}\]\w\[${GIT_PIECE}\] \[${COLOR_GREEN}\]\$\[${COLOR_NONE}\] "
+export PS1="\u\[${COLOR_LIGHT_GREEN}\]@\[${COLOR_NONE}\]\h \[${COLOR_LIGHT_PURPLE}\]\w\[${GIT_PIECE}\] \[${COLOR_LIGHT_GREEN}\]\$\[${COLOR_NONE}\] "
 umask 022
 
 export EDITOR='mate -w'
