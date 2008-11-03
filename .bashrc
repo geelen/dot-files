@@ -1,12 +1,12 @@
 system_name=`uname -s`
 
-#if [ $system_name == 'Linux' ]; then
-#  ls -1 --color=none /etc/bash_completion.d | while read f; do
-#    echo "$f"
-#  done
-#else
-#  . /opt/local/etc/bash_completion
-#fi
+if [ $system_name == 'Linux' ]; then
+  . /etc/bash_completion
+  export EDITOR='vim'
+else
+  . /opt/local/etc/bash_completion
+  export EDITOR='mate -w'
+fi
 
 export COLOR_NONE='\e[0m'
 export COLOR_WHITE='\e[1;37m'
@@ -30,7 +30,6 @@ GIT_PIECE='$(__git_ps1 " \[${COLOR_RED}\]%s\[${COLOR_NONE}\]")'
 export PS1="\u\[${COLOR_LIGHT_GREEN}\]@\[${COLOR_NONE}\]\h \[${COLOR_LIGHT_PURPLE}\]\w\[${GIT_PIECE}\] \[${COLOR_LIGHT_GREEN}\]\$\[${COLOR_NONE}\] "
 umask 022
 
-export EDITOR='mate -w'
 export ARCHFLAGS='-arch i386'
 export MAKEFLAGS='-j4'
 export RUBYLIB="lib:test:$RUBYLIB"
@@ -63,5 +62,7 @@ alias gitau='git add -u'
 alias gitd='git diff'
 alias gitdc='git diff --cached'
 alias gitc='git commit -v'
+alias gitca='git commit -a -v'
 alias gitpushom='git push origin master'
 alias gitpullom='git pull origin master'
+
