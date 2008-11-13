@@ -43,6 +43,7 @@ if [ "$TERM" != "dumb" ]; then
     color_option='--color=auto'
   else
     color_option='-G'
+    alias df='df -k'
   fi
 
   alias ls="ls $color_option"
@@ -52,7 +53,6 @@ if [ "$TERM" != "dumb" ]; then
 fi
 
 alias top='top -o cpu'
-alias df='df -k'
 alias du='du -k -d1'
 alias less='less -R'
 
