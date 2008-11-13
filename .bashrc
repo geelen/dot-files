@@ -68,3 +68,21 @@ alias gitpullom='git pull origin master'
 
 bind "\C-p":history-search-backward
 bind "\C-n":history-search-forward
+
+alias k='cd ~/Projects/kahuna'
+alias b="./build.sh"
+alias ci="svn ci -m ''"
+alias up="svn up"
+alias st="svn st"
+
+JAVA_HOME=/opt/jdk16
+JDK_HOME=/opt/jdk16
+PATH=$JAVA_HOME/bin:/var/lib/gems/1.8/bin/:$PATH:~/bin:~/src/ec2/ec2-api-tools/bin
+export JAVA_HOME JDK_HOME PATH
+
+function @ {
+   pushd . 
+   cd ~/Projects/kahuna
+   ./@
+   popd
+}
