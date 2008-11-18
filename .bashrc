@@ -57,14 +57,23 @@ alias du='du -k -d1'
 alias less='less -R'
 
 alias gits='git status'
+alias gs='git status'
 alias gita='git add'
 alias gitau='git add -u'
 alias gitd='git diff'
 alias gitdc='git diff --cached'
 alias gitc='git commit -v'
+alias gc='git commit -v'
 alias gitca='git commit -a -v'
+alias gca='git commit -a -v'
 alias gitpushom='git push origin master'
 alias gitpullom='git pull origin master'
+alias gpl='git pull'
+alias gph='git push'
+
+alias m='cd ~/src/mohole'
 
 bind "\C-p":history-search-backward
 bind "\C-n":history-search-forward
+
+bind "set show-all-if-ambiguous On"
