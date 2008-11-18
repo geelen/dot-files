@@ -43,6 +43,7 @@ if [ "$TERM" != "dumb" ]; then
     color_option='--color=auto'
   else
     color_option='-G'
+    alias df='df -k'
   fi
 
   alias ls="ls $color_option"
@@ -52,7 +53,6 @@ if [ "$TERM" != "dumb" ]; then
 fi
 
 alias top='top -o cpu'
-alias df='df -k'
 alias du='du -k -d1'
 alias less='less -R'
 
@@ -77,3 +77,21 @@ bind "\C-p":history-search-backward
 bind "\C-n":history-search-forward
 
 bind "set show-all-if-ambiguous On"
+
+alias k='cd ~/Projects/kahuna'
+alias b="./build.sh"
+alias ci="svn ci -m ''"
+alias up="svn up"
+alias st="svn st"
+
+JAVA_HOME=/opt/jdk16
+JDK_HOME=/opt/jdk16
+PATH=$JAVA_HOME/bin:/var/lib/gems/1.8/bin/:$PATH:~/bin:~/src/ec2/ec2-api-tools/bin
+export JAVA_HOME JDK_HOME PATH
+
+function @ {
+   pushd . 
+   cd ~/Projects/kahuna
+   ./@
+   popd
+}
