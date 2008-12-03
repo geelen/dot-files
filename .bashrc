@@ -59,7 +59,9 @@ alias less='less -R'
 alias gits='git status'
 alias gs='git status'
 alias gita='git add'
+alias ga='git add'
 alias gitau='git add -u'
+alias gau='git add -u'
 alias gitd='git diff'
 alias gitdc='git diff --cached'
 alias gitc='git commit -v'
@@ -68,8 +70,9 @@ alias gitca='git commit -a -v'
 alias gca='git commit -a -v'
 alias gitpushom='git push origin master'
 alias gitpullom='git pull origin master'
-alias gpl='git pull'
-alias gph='git push'
+alias gpl='git pull && git log ORIG_HEAD..HEAD --pretty=format:"%Cblue%h%Creset %Cgreen%an%Creset %s" && git submodule update'
+alias gph='git log $(git config branch.master.remote)/master..master --pretty=format:"%Cblue%h%Creset %Cgreen%an%Creset %s" && git push'
+alias gp='gpl && gph'
 
 alias m='cd ~/src/mohole'
 
@@ -83,6 +86,8 @@ alias b="./build.sh"
 alias ci="svn ci -m ''"
 alias up="svn up"
 alias st="svn st"
+alias g='ssh dev@gordon.vlc'
+alias f='ssh dev@freeman.vlc'
 
 JAVA_HOME=/opt/jdk16
 JDK_HOME=/opt/jdk16
