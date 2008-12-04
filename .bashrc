@@ -70,9 +70,10 @@ alias gitca='git commit -a -v'
 alias gca='git commit -a -v'
 alias gitpushom='git push origin master'
 alias gitpullom='git pull origin master'
-alias gpl='git pull && git log ORIG_HEAD..HEAD --pretty=format:"%Cblue%h%Creset %Cgreen%an%Creset %s" && git submodule update'
+alias gpl='git pull && git log ORIG_HEAD..HEAD --pretty=format:"%Cblue%h%Creset %Cgreen%an%Creset %s" | cat && echo && git submodule update'
 alias gph='git log $(git config branch.master.remote)/master..master --pretty=format:"%Cblue%h%Creset %Cgreen%an%Creset %s" && git push'
 alias gp='gpl && gph'
+alias gd='git diff | $EDITOR'
 
 alias m='cd ~/src/mohole'
 
