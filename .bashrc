@@ -24,7 +24,7 @@ export HISTSIZE=1000000
 
 bind "set show-all-if-ambiguous On"
 
-shopt -s globstar
+#shopt -s globstar
 
 # coloured ls
 if [ "$TERM" != "dumb" ]; then
@@ -44,6 +44,7 @@ if [ "$TERM" != "dumb" ]; then
   alias lal="ls -lha $color_option"
 
   . ~/.scripts/j.sh
+  fi
 fi
 
 alias df='df -h'
