@@ -4,8 +4,8 @@ system_name=`uname -s`
 . ~/.ps1_color
 
 git_piece='$(__git_ps1 " \[$color_red\]%s\[$color_none\]")'
-date_piece="\[${color_gray}\]\$(date '+%a %H:%M:%S')\[${color_none}\]"
-export PS1="${date_piece} \u\[${color_ps1}\]@\[${color_none}\]\h \[${color_gray}\]\w\[${git_piece}\]\n\[${color_ps1}\]\$\[${color_none}\] "
+date_piece="\[${color_light_gray}\]\$(date '+%a %H:%M:%S')\[${color_none}\]"
+export PS1="${date_piece} \u\[${color_ps1}\]@\[${color_none}\]\h \[${color_light_purple}\]\w${git_piece}\n\[${color_ps1}\]\$\[${color_none}\] "
 umask 022
 
 if [ $system_name == 'Linux' ]; then
@@ -38,17 +38,21 @@ if [ "$TERM" != "dumb" ]; then
     alias top='top -o cpu'
 
     alias vi='mate'
+  fi
+
   alias ls="ls $color_option"
   alias ll="ls -lh $color_option"
   alias la="ls -a $color_option"
   alias lal="ls -lha $color_option"
 
   . ~/.scripts/j.sh
-  fi
 fi
 
 alias df='df -h'
 alias less='less -R'
+
+bind "\C-p":history-search-backward
+bind "\C-n":history-search-forward
 
 . ~/.aliases/git
 . ~/.aliases/svn
