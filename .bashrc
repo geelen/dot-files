@@ -41,9 +41,14 @@ export GEMS='/opt/local/lib/ruby/gems/1.8/gems'
 if [ "$TERM" != "dumb" ]; then
   if [ $system_name == 'Linux' ]; then
     color_option='--color=auto'
+    alias du='du -sch *'
+    alias df='df -h'
   else
     color_option='-G'
     alias df='df -k'
+    alias top='top -o cpu'
+    alias du='du -k -d1'
+    alias less='less -R'
   fi
 
   alias ls="ls $color_option"
@@ -51,10 +56,6 @@ if [ "$TERM" != "dumb" ]; then
   alias la="ls -a $color_option"
   alias lal="ls -lha $color_option"
 fi
-
-alias top='top -o cpu'
-alias du='du -k -d1'
-alias less='less -R'
 
 alias gits='git status'
 alias gs='git status'
@@ -75,24 +76,19 @@ alias gph='git log $(git config branch.master.remote)/master..master --pretty=fo
 alias gp='gpl && gph'
 alias gd='git diff | $EDITOR'
 
-alias m='cd ~/src/mohole'
-
 bind "\C-p":history-search-backward
 bind "\C-n":history-search-forward
 
 bind "set show-all-if-ambiguous On"
 
-alias k='cd ~/Projects/kahuna'
 alias b="./build.sh"
 alias ci="svn ci -m ''"
 alias up="svn up"
 alias st="svn st"
-alias g='ssh dev@gordon.vlc'
-alias f='ssh dev@freeman.vlc'
 
 JAVA_HOME=/opt/jdk16
-JDK_HOME=/opt/jdk16
-PATH=$JAVA_HOME/bin:/var/lib/gems/1.8/bin/:$PATH:~/bin:~/src/ec2/ec2-api-tools/bin
+MAVEN_HOME=/opt/apache-maven
+PATH=$JAVA_HOME/bin:/var/lib/gems/1.8/bin/:$PATH:~/bin:$MAVEN_HOME/bin
 export JAVA_HOME JDK_HOME PATH
 
 function @ {
