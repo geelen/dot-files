@@ -64,13 +64,11 @@ autocmd FileType c,cpp,slang set cindent
 " show the `best match so far' as search strings are typed:
 set incsearch
 
-" Makefile sanity
-autocmd BufEnter ?akefile* set noet ts=8 sw=8
-autocmd BufEnter */debian/rules set noet ts=8 sw=8
-
-" Map f11 to toggle background
-map  :let &background = ( &background == “dark”? “light” : “dark” )
-" Map f5 to toggle search highlighting
-map  :set hls!set hls?
 
 set pastetoggle=<F6>
+set expandtab
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
+set mouse=a
+set mousehide
