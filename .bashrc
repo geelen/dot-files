@@ -22,6 +22,8 @@ export RUBYLIB="lib:test:$RUBYLIB"
 export GEMS="`gem env gemdir`/gems"
 export HISTSIZE=1000000
 
+export PATH=$PATH:/opt/apache-maven/bin
+
 bind "set show-all-if-ambiguous On"
 
 #shopt -s globstar
