@@ -23,6 +23,7 @@ export GEMS="`gem env gemdir`/gems"
 export HISTSIZE=1000000
 
 export PATH=$PATH:/opt/apache-maven/bin
+export MAVEN_OPTS=-Xmx512M
 
 bind "set show-all-if-ambiguous On"
 
