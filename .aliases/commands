@@ -1,4 +1,8 @@
 alias m='mate .'
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -nr | head -n 20"
-alias a='cd ~/src/git-admo/admo'
+alias a='cd ~/src/admo4/admo'
 alias gs='echo FAIL! USE gits!'
+alias a-build='mvn install -DskipTests'
+alias a-idea='mvn idea:idea'
+alias a-hadoop='mvn com.fastsearch.admomentum.maven:maven-hadoop-plugin:4.0.0-SNAPSHOT:start -DhadoopEndless'
+alias a-short='mvn clean install -Psystem-test'
