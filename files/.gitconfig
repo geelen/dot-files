@@ -1,11 +1,11 @@
 [user]
-        name = Ben Hoskings
-        email = ben@hoskings.net
+    name = Glen Maddern
+    email = glenmaddern@gmail.com
 [color]
 	diff = auto
 	status = auto
 	branch = auto
 [core]
-	excludesfile = /Users/ben/.gitignore
+	excludesfile = /Users/glen/.gitignore
 [github]
-	user = benhoskings
+	user = geelen
