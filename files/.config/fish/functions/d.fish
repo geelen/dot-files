@@ -1,3 +1,5 @@
 function d
-	gd $argv; 
+	gd -w $argv
+
+
 end
