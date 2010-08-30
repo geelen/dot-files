@@ -56,3 +56,6 @@ export LESS=-R                                            # Make less support AN
 export RUBYOPT=rubygems                                   # Make Ruby load rubygems without a require.
 export ACK_OPTIONS="--nosql --type-set cucumber=.feature" # Make ack ignore sql dumps, and search cucumber features.
 
+. ~/.aliases/git
+. ~/.aliases/env
+. ~/.aliases/commands
