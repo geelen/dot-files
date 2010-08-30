@@ -1,9 +1,3 @@
-# coloured ls
-if [ "$TERM" != "dumb" ]; then
-  color_option='--color=auto'
-  alias ls="ls $color_option"
-fi
-
 alias l="ls"
 alias ll="ls -lh"
 alias la="ls -a"
@@ -15,4 +9,6 @@ alias psf="ps faux"
 alias m="sudo monit"
 alias ms="sudo monit status"
 
-alias m='mate .'
+alias m="mate ."
+
+alias e="cd ~/envato/marketplace"

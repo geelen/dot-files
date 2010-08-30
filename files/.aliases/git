@@ -1,11 +1,49 @@
-git_concise_log_format='--pretty=format:%Cblue%h%Creset %cr %Cgreen%an%Creset %s'
+git_concise_logging_format='--pretty=format:%Cblue%h%Creset %cr %Cgreen%an%Creset %s'
 
-alias s='git status'
+alias s='git status -sb'
+
 alias ga='git add'
-alias gs='git show'
-alias d='git diff'
+alias gap='ga -p'
 alias gd='git diff'
-alias gdc='git diff --cached'
+alias d='gd'
+alias gd.="gd --color-words='.'"
+alias gdc='gd --cached'
+
 alias gl='git log -p'
 alias glc='git log "$concise_logging_format"'
 alias glcg='glc --graph'
+
+alias gc='git commit -v'
+alias gca='gc -a'
+alias gcam='gca --amend'
+alias gcm='gc --amend'
+
+alias gco='git checkout'
+
+alias gbr='git branch -v'
+
+alias gf='git fetch'
+alias gfo='gf origin'
+
+alias gm='git merge --no-ff'
+
+alias gp='git push'
+alias gpo='gp origin'
+alias gpom='gpo master'
+
+alias gr='git reset'
+alias grh='gr --hard'
+alias grs='gr --soft'
+
+alias grb='git rebase'
+alias grbc='grb --continue'
+alias grba='grb --abort'
+alias grbi='grb -i'
+
+alias gs='git show'
+alias gst='git stash'
+alias gstp='git stash pop'
+
+# can I do this in zsh?
+alias gpthis='gpo HEAD:$(git_current_branch)'
+alias gup='gfo && grb origin/$(git_current_branch)'
