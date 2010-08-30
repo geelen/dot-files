@@ -1,5 +1,6 @@
 function s
-	git status $argv
+	git status -sb $argv
 	return 0
+
 
 end
