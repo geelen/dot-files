@@ -4,7 +4,7 @@ function fish_prompt --description 'Write out the prompt'
 	set -l pr_timestamp (date '+%a %H:%M:%S')
 	set -l pr_user (whoami)
 	set -l pr_hostname (hostname | cut -d . -f 1)
-	set -l pr_host (echo "\001\033[31m\002$pr_hostname\001\033[0m\002")
+  set -l pr_host (echo "\001\033[33m\002$pr_hostname\001\033[0m\002")
 	set -l pr_duration (test -n "$duration"; and echo " ($duration)")
 	set -l pr_term (test $TERM = 'screen'; and echo "[screen/$WINDOW] ")
 	set -l pr_cwd (prompt_pwd)
