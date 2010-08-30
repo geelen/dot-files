@@ -44,18 +44,12 @@ setopt INC_APPEND_HISTORY
 setopt EXTENDED_HISTORY
 
 # Customize to your needs...
-export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:~/.bin
-
-# Vi key bindings.
-bindkey -v
+export PATH=~/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 
 # RVM
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
 
-# We use the full path here to work around this nasty bug: http://www.tpope.net/node/108
-# In particular, calling "filetype indent off" in my vimrc was causing vim to
-# always exit with a non-zero status. Very annoying for git commit.
-export EDITOR=/usr/bin/vim
+export EDITOR='mate -w'
 
 export CLICOLOR=1                                         # Make ls colour its output.
 export LESS=-R                                            # Make less support ANSI colour sequences.
