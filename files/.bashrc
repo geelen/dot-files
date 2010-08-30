@@ -61,3 +61,5 @@ alias less='less -R'
 . ~/.aliases/git
 . ~/.aliases/svn
 . ~/.aliases/commands
+
+[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
