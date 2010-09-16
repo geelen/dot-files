@@ -4,7 +4,7 @@ alias s='git status -sb'
 
 alias ga='git add'
 alias gap='ga -p'
-alias gd='git diff'
+alias gd='git diff -w'
 alias d='gd'
 alias gd.="gd --color-words='.'"
 alias gdc='gd --cached'

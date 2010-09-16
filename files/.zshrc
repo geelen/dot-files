@@ -17,7 +17,7 @@ function git_prompt_info() {
   echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }
 
-parse_git_dirty () {
+function parse_git_dirty () {
   if [[ -n $(git status -s 2> /dev/null) ]]; then
     echo "$ZSH_THEME_GIT_PROMPT_DIRTY"
   else
@@ -25,7 +25,19 @@ parse_git_dirty () {
   fi
 }
 
-PROMPT='%{$fg[blue]%}%~%{$reset_color%}$(git_prompt_info) '
+function prompt_char() {
+}
+#
+#autoload -Uz vcs_info
+#zstyle ':vcs_info:*' enable git
+#zstyle ':vcs_info:git*:*' get-revision true
+#zstyle ':vcs_info:git*:*' check-for-changes true
+#
+## hash changes branch misc
+#zstyle ':vcs_info:git*' formats "(%s) %12.12i %c%u %b%m"
+#zstyle ':vcs_info:git*' actionformats "(%s|%a) %12.12i %c%u %b%m"
+
+PROMPT='%{$fg[green]%}%~%{$reset_color%}$(git_prompt_info) $(prompt_char)'
 
 function rvm_prompt_info() {
   ruby_version=$(~/.rvm/bin/rvm-prompt 2> /dev/null) || return
@@ -64,3 +76,6 @@ export ACK_OPTIONS="--nosql --type-set cucumber=.feature" # Make ack ignore sql 
 . ~/.aliases/git
 . ~/.aliases/env
 . ~/.aliases/commands
+
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
