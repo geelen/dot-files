@@ -79,3 +79,4 @@ export ACK_OPTIONS="--nosql --type-set cucumber=.feature" # Make ack ignore sql 
 
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
+
