@@ -35,7 +35,7 @@ alias gr='git reset'
 alias grh='gr --hard'
 alias grs='gr --soft'
 
-alias grb='git rebase'
+alias grb='git rebase -p'
 alias grbc='grb --continue'
 alias grba='grb --abort'
 alias grbi='grb -i'
