@@ -1,3 +1,3 @@
 function grb
-	git rebase -p $argv; 
+	git rebase -p $argv;
 end
