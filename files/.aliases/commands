@@ -12,3 +12,6 @@ alias ms="sudo monit status"
 alias m="mate ."
 
 alias e="cd ~/envato/marketplace"
+
+alias sc='bundle exec script/console'
+alias cuke='bundle exec cucumber'
