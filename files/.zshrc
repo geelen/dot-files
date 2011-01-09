@@ -80,3 +80,5 @@ export ACK_OPTIONS="--nosql --type-set cucumber=.feature" # Make ack ignore sql 
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
+ssh-add ~/.ssh/id_dsa 2> /dev/null
+

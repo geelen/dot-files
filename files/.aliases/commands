@@ -15,3 +15,5 @@ alias e="cd ~/envato/marketplace"
 
 alias sc='bundle exec script/console'
 alias cuke='bundle exec cucumber'
+alias ur='bundle exec unicorn_rails -c config/unicorn.rb'
+

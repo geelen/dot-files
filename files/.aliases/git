@@ -7,9 +7,10 @@ alias d='gd'
 alias gd.="gd --color-words='.'"
 alias gdc='gd --cached'
 
-alias gl='git log -p'
-alias glc='git log --pretty=format:"%Cblue%h%Creset %cr %Cgreen%an%Creset %s"'
-alias glcg='glc --graph'
+alias glp='git log -p'
+alias gl='git smart-log'
+alias glc='gl'
+alias glcg='gl'
 
 alias gc='git commit -v'
 alias gca='gc -a'
@@ -23,7 +24,7 @@ alias gbr='git branch -v'
 alias gf='git fetch'
 alias gfo='gf origin'
 
-alias gm='git merge --no-ff'
+alias gm='git smart-merge'
 
 alias gp='git push'
 alias gpo='gp origin'
@@ -44,4 +45,4 @@ alias gstp='git stash pop'
 
 # can I do this in zsh?
 alias gpthis='gpo HEAD:$(git_current_branch)'
-alias gup='gfo && grb origin/$(git_current_branch)'
+alias gup='git smart-pull'
