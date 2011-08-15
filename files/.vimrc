@@ -1,18 +1,21 @@
+set et
+set sw=2
+set nu
 syntax on
-set expandtab
-set ts=2 sw=2 sws=2
-set autoindent nosmartindent nocindent
+set autoindent
+set smartindent
+set guifont=Inconsolata:h14
+set bg=dark
+set pastetoggle=<F6>
 
-filetype plugin on
-filetype indent off
+if has("autocmd")
+  filetype indent on
+endif
 
-set backspace=indent,eol,start " allow backspacing over everything in insert mode
-set backup " keep backup file after overwriting a file
-set backupdir=~/.vim_backups " directory for the backups
+" 'quote' a word
+nnoremap qw :silent! normal mpea'<Esc>bi'<Esc>`pl
+" double "quote" a word
+nnoremap qd :silent! normal mpea"<Esc>bi"<Esc>`pl
+" remove quotes from a word
+nnoremap wq :silent! normal mpeld bhd `ph<CR>
 
-:map <C-a> ^
-:map <C-e> $
-:cmap <C-a> <home>
-:cmap <C-e> <end>
-:imap <C-e> <ESC>$i<right>
-:imap <C-a> <ESC>^i

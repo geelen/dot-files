@@ -8,15 +8,12 @@ date_piece="\[${color_gray}\]\$(date '+%a %H:%M:%S')\[${color_none}\]"
 export PS1="${date_piece} \u\[${color_ps1}\]@\[${color_none}\]\h \[${color_gray}\]\w\[${git_piece}\]\n\[${color_ps1}\]\$\[${color_none}\] "
 umask 022
 
-function git_current_branch() {
-  git symbolic-ref HEAD 2> /dev/null | sed -e 's/refs\/heads\///'
-}
-
 if [ $system_name == 'Linux' ]; then
-  . /etc/bash_completion
+  [ -f /etc/bash_completion ] && . /etc/bash_completion
 
   export EDITOR='vim'
 else
+  [ -f /opt/local/etc/bash_completion ] && . /opt/local/etc/bash_completion
 
   export EDITOR='mate -w'
 fi
@@ -27,7 +24,9 @@ export RUBYLIB="lib:test:$RUBYLIB"
 export GEMS="`gem env gemdir`/gems"
 export HISTSIZE=1000000
 
-# bind "set show-all-if-ambiguous On"
+bind "set show-all-if-ambiguous On"
+
+#shopt -s globstar
 
 # coloured ls
 if [ "$TERM" != "dumb" ]; then
@@ -60,6 +59,5 @@ alias df='df -h'
 alias less='less -R'
 
 . ~/.aliases/git
+. ~/.aliases/svn
 . ~/.aliases/commands
-
-[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm

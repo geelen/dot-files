@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+
+# The methods that get called more than once are memoized.
+
+def git_repo_path
+  @git_repo_path ||= `git rev-parse --git-dir 2>/dev/null`.strip
+end
+
+def in_git_repo
+  !git_repo_path.empty? &&
+  git_repo_path != '~' &&
+  git_repo_path != "#{ENV['HOME']}/.git"
+end
+
+def git_parse_branch
+  @git_parse_branch ||= File.read("#{git_repo_path}/HEAD").strip.sub(/^.*refs\/heads\//, '')
+end
+
+def git_head_commit_id
+  `git rev-parse --short HEAD 2>/dev/null`.strip
+end
+
+def git_cwd_dirty
+  ' ✗' unless git_repo_path == '.' || `git ls-files -m`.strip.empty?
+end
+
+def rebasing_etc
+  if File.exists?(File.join(git_repo_path, 'BISECT_LOG'))
+    "+bisect"
+  elsif File.exists?(File.join(git_repo_path, 'MERGE_HEAD'))
+    "+merge"
+  elsif %w[rebase rebase-apply rebase-merge ../.dotest].any? {|d| File.exists?(File.join(git_repo_path, d)) }
+    "+rebase"
+  end
+end
+
+if in_git_repo
+  puts " • %{\e[0;90m%}#{git_parse_branch}%{\e[0m%}@%{\e[0;90m%}#{git_head_commit_id}%{\e[0m%}#{rebasing_etc}%{\e[0;90m%}#{git_cwd_dirty}%{\e[0m%}"
+end

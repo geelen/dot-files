@@ -1,3 +1,3 @@
 function gm
-	git merge --no-ff $argv; 
+	git merge --no-ff $argv
 end
