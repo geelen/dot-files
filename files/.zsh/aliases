@@ -16,10 +16,15 @@ alias d='gd $argv'
 alias m='mate . $argv'
 
 alias df='df -kh $argv'
-alias reload_webkit='osascript -e 'tell application "WebKit" to do JavaScript "window.location.reload()" in front document''
-alias tigs='tig status $argv'
 
 alias rs="bundle exec rake spec"
 
 alias add_alias='mate -w ~/.zsh/aliases; cd ~/.dot-files; ga files/.zsh/aliases; gc'
 alias git_alias='mate -w ~/.zsh/git_aliases; cd ~/.dot-files; ga files/.zsh/git_aliases; gc'
+
+alias ho='git push heroku master'
+alias g='cd ~/src/goodfilms'
+alias be='bundle exec'
+alias rs='rails s'
+alias rc='rails c'
+alias dbgo='rake db:migrate db:structure:dump db:test:prepare --trace'

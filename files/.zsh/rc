@@ -46,3 +46,8 @@ function self-insert-backslash() { LBUFFER+='\'; zle .self-insert }
 zle -N self-insert-backslash
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+
+ssh-add ~/.ssh/id_dsa 2> /dev/null

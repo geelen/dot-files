@@ -43,6 +43,5 @@ alias gs='git show'
 alias gst='git stash'
 alias gstp='git stash pop'
 
-# can I do this in zsh?
 alias gpthis='gpo HEAD:$(git_current_branch)'
 alias gup='git smart-pull'
