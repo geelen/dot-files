@@ -2,7 +2,7 @@
     name = Glen Maddern
     email = glenmaddern@gmail.com
 [color]
-	ui = always
+	ui = auto
 [core]
 	excludesfile = /Users/glen/.gitignore
 [github]

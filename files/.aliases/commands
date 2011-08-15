@@ -11,9 +11,15 @@ alias ms="sudo monit status"
 
 alias m="mate ."
 
-alias e="cd ~/envato/marketplace"
-
 alias sc='bundle exec script/console'
 alias cuke='bundle exec cucumber'
 alias ur='bundle exec unicorn_rails -c config/unicorn.rb'
+
+alias ho='git push heroku master'
+alias g='cd ~/src/3.1/goodfilms'
+alias be='bundle exec'
+alias po='git push preview master'
+alias rs='rails s'
+alias rc='rails c'
+alias dbgo='rake db:migrate db:structure:dump db:test:prepare --trace'
 
