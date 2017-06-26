@@ -3,3 +3,5 @@ dontbackup
 .config/fish/fish*history
 .config/fish/fishd.*
 .idea
+.sass-cache
+npm-debug.log

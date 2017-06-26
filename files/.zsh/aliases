@@ -29,3 +29,10 @@ alias rs='rails s'
 alias rc='rails c'
 alias rake='bundle exec rake'
 alias dbgo='rake db:migrate db:structure:dump db:test:prepare --trace'
+
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --console --no-first-run --user-data-dir=$HOME/.config/chrome-test --use-fake-device-for-media-stream --enable-logging --v=1 --vmodule='*third_party/libjingle/*=3,*=0' --unsafely-treat-insecure-origin-as-secure='http://dev.localhost:3000/,http://test_team.dev.localhost:3000/,http://admin.dev.localhost:3000/'"
+alias chrome2="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --console --no-first-run --user-data-dir=$HOME/.config/chrome-test2 --use-fake-device-for-media-stream --enable-logging --v=1 --vmodule='*third_party/libjingle/*=3,*=0' --unsafely-treat-insecure-origin-as-secure='http://dev.localhost:3000/,http://test_team.dev.localhost:3000/,http://admin.dev.localhost:3000/'"
+alias chrome3="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --console --no-first-run --user-data-dir=$HOME/.config/chrome-test3 --enable-logging --v=1 --vmodule='*third_party/libjingle/*=3,*=0' --unsafely-treat-insecure-origin-as-secure='http://dev.localhost:3000/,http://test_team.dev.localhost:3000/,http://admin.dev.localhost:3000/'"
+alias chrome4="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --console --no-first-run --user-data-dir=$HOME/.config/chrome-test4 --enable-logging --v=1 --vmodule='*third_party/libjingle/*=3,*=0' --unsafely-treat-insecure-origin-as-secure='http://dev.localhost:3000/,http://test_team.dev.localhost:3000/,http://admin.dev.localhost:3000/'"
+
+code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
