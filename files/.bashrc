@@ -60,3 +60,15 @@ alias less='less -R'
 
 . ~/.aliases/git
 . ~/.aliases/commands
+
+export PATH="$HOME/.yarn/bin:$PATH"
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[ -f /Users/glen/src/work/bitgenics/linc-cd/github-pr-ui/node_modules/tabtab/.completions/serverless.bash ] && . /Users/glen/src/work/bitgenics/linc-cd/github-pr-ui/node_modules/tabtab/.completions/serverless.bash
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[ -f /Users/glen/src/work/bitgenics/linc-cd/github-pr-ui/node_modules/tabtab/.completions/sls.bash ] && . /Users/glen/src/work/bitgenics/linc-cd/github-pr-ui/node_modules/tabtab/.completions/sls.bash
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[ -f /Users/glen/src/work/bitgenics/linc-cd/cd/node_modules/tabtab/.completions/slss.bash ] && . /Users/glen/src/work/bitgenics/linc-cd/cd/node_modules/tabtab/.completions/slss.bash

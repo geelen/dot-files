@@ -5,3 +5,4 @@ dontbackup
 .idea
 .sass-cache
 npm-debug.log
+.vscode

@@ -1,0 +1,38 @@
+{
+	"analytics-uuid": "35d674a8-a686-4201-9c85-c56208ec213b",
+	"motd": {
+		"minVersion": "3.0.5"
+	},
+	"motd.fetched": 1510203859828,
+	"usage": true,
+	"user": {
+		"azp": "563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com",
+		"aud": "563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com",
+		"sub": "110936807149747962079",
+		"hd": "glenmaddern.com",
+		"email": "glen@glenmaddern.com",
+		"email_verified": true,
+		"at_hash": "6d0q3-VvaAeQzf41ZMgV2A",
+		"iss": "accounts.google.com",
+		"iat": 1508471789,
+		"exp": 1508475389
+	},
+	"tokens": {
+		"expires_at": 1510213736247,
+		"refresh_token": "1/w-MdaW4AVlhcJmY39yGq6OqNuc51l_BqOfsoXTyJTNw",
+		"scopes": [
+			"email",
+			"https://www.googleapis.com/auth/cloud-platform",
+			"https://www.googleapis.com/auth/cloudplatformprojects.readonly",
+			"https://www.googleapis.com/auth/firebase",
+			"openid"
+		],
+		"access_token": "ya29.Glz_BK1lYJDm1uwZn-FqNNfdqYudIZuhrBeM2B-WlJYc6ApFNkxGnZF0VF6YW72-y3Oo2wDD8pE3U2RP4etotaIE_hKumvg_-4CFteRsRQt-UVzjeQvtV_HpP_dQmg",
+		"token_type": "Bearer",
+		"expires_in": 3600,
+		"id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImE3MTE0OTBiNWJlODVhODU1YWJhYjQ4M2FiODhkYjc4YjVhYTRmYmEifQ.eyJhenAiOiI1NjM1ODQzMzU4NjktZmdyaGdtZDQ3YnFuZWtpajVpOGI1cHIwM2hvODQ5ZTYuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NjM1ODQzMzU4NjktZmdyaGdtZDQ3YnFuZWtpajVpOGI1cHIwM2hvODQ5ZTYuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTA5MzY4MDcxNDk3NDc5NjIwNzkiLCJoZCI6ImdsZW5tYWRkZXJuLmNvbSIsImVtYWlsIjoiZ2xlbkBnbGVubWFkZGVybi5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImdaWmIxZERJTWw2UmNzNEtneUk2bGciLCJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiaWF0IjoxNTEwMjEwMTM2LCJleHAiOjE1MTAyMTM3MzZ9.hgBB1qtfxdhbK17uotNVcnZY9-0wTJqn0vhSG9MJ8EoZ7LdHeTRLaq8Oz22AJGMBIR82c9SajJX14l9PS_n5tGizRGsudaoVoCyMpwlMU2HG5d8yJLwCzoslhasmWsfHlO583j6O0mnroZt4YHc6dEHNPpfRNflT4U-OwojVQ0Tk7BmdjCRwp6nvVDlSwoLkJSdJyt_rH_W4-OG86rUEuhHR5ly7zHg381kVydNz2XpBnn3h89oTxwOtJO3N0UfF3CwuAFD-vUF9lLJsxmGmkonAbsiXsoFMI5vOmGD95X-Khy1gban3WZKBfkRJKRk0q-aCQIJ41n04I5-xDZVFpg"
+	},
+	"activeProjects": {
+		"/Users/glen/src/experiments/firestore": "chinwag-dev"
+	}
+}

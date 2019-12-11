@@ -13,7 +13,8 @@ alias lal='ls -lah'
 
 alias s='git status -sb $argv; return 0'
 alias d='gd $argv'
-alias m='mate . $argv'
+
+alias lfe='cd ~/src/work/bitgenics/linc-front-end'
 
 alias df='df -kh $argv'
 
@@ -23,7 +24,8 @@ alias add_alias='mate -w ~/.zsh/aliases; cd ~/.dot-files; ga files/.zsh/aliases;
 alias git_alias='mate -w ~/.zsh/git_aliases; cd ~/.dot-files; ga files/.zsh/git_aliases; gc'
 
 alias ho='git push heroku master'
-alias g='cd ~/src/goodfilms'
+alias sc='cd ~/src/projects/styled-components/styled-components'
+alias fec='cd ~/src/projects/fec/frontend.center'
 alias be='bundle exec'
 alias rs='rails s'
 alias rc='rails c'
@@ -34,5 +36,8 @@ alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --c
 alias chrome2="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --console --no-first-run --user-data-dir=$HOME/.config/chrome-test2 --use-fake-device-for-media-stream --enable-logging --v=1 --vmodule='*third_party/libjingle/*=3,*=0' --unsafely-treat-insecure-origin-as-secure='http://dev.localhost:3000/,http://test_team.dev.localhost:3000/,http://admin.dev.localhost:3000/'"
 alias chrome3="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --console --no-first-run --user-data-dir=$HOME/.config/chrome-test3 --enable-logging --v=1 --vmodule='*third_party/libjingle/*=3,*=0' --unsafely-treat-insecure-origin-as-secure='http://dev.localhost:3000/,http://test_team.dev.localhost:3000/,http://admin.dev.localhost:3000/'"
 alias chrome4="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --console --no-first-run --user-data-dir=$HOME/.config/chrome-test4 --enable-logging --v=1 --vmodule='*third_party/libjingle/*=3,*=0' --unsafely-treat-insecure-origin-as-secure='http://dev.localhost:3000/,http://test_team.dev.localhost:3000/,http://admin.dev.localhost:3000/'"
+
+alias ff="/Applications/Firefox.app/Contents/MacOS/firefox -profile /Users/glen/Library/Application\ Support/Firefox/Profiles/u7jzufe7.screencasts > /dev/null 2> /dev/null &"
+alias ffnightly="/Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile /Users/glen/Library/Application\ Support/Firefox/Profiles/u7jzufe7.screencasts > /dev/null 2> /dev/null &"
 
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}

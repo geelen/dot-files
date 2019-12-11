@@ -5,6 +5,7 @@
 	ui = auto
 [core]
 	excludesfile = /Users/glen/.gitignore
+	pager = "delta --theme=\"TwoDark\" --plus-color=\"#001701\" --plus-emph-color=\"#064000\" --minus-color=\"#240002\" --minus-emph-color=\"#64000E\""
 [github]
 	user = geelen
 [filter "media"]
