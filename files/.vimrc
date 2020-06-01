@@ -7,6 +7,7 @@ set smartindent
 set guifont=Inconsolata:h14
 set bg=dark
 set pastetoggle=<F6>
+:colorschem slate
 
 if has("autocmd")
   filetype indent on
