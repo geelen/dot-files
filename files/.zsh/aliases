@@ -14,7 +14,13 @@ alias lal='ls -lah'
 alias s='git status -sb $argv; return 0'
 alias d='gd $argv'
 
-alias lfe='cd ~/src/work/bitgenics/linc-front-end'
+alias aliases='vim ~/.zsh/aliases'
+
+alias lfe='cd ~/src/work/linc/linc-front-end'
+alias lcd='cd ~/src/work/linc/linc-cd'
+alias f='cd ~/src/projects/fab'
+alias fo='cd ~/src/fab-onboarding'
+alias hu='cd ~/src/projects/humane-app'
 
 alias df='df -kh $argv'
 
@@ -41,3 +47,5 @@ alias ff="/Applications/Firefox.app/Contents/MacOS/firefox -profile /Users/glen/
 alias ffnightly="/Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile /Users/glen/Library/Application\ Support/Firefox/Profiles/u7jzufe7.screencasts > /dev/null 2> /dev/null &"
 
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
+
+
