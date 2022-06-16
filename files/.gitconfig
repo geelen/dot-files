@@ -1,6 +1,6 @@
 [user]
-    name = Glen Maddern
-    email = glenmaddern@gmail.com
+	name = Glen Maddern
+	email = glen@cloudflare.com
 [color]
 	ui = auto
 [core]
@@ -15,3 +15,5 @@
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
+[init]
+	defaultBranch = main

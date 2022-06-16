@@ -32,3 +32,4 @@ else
 fi
 unset __conda_setup
 # <<< conda init <<<
+source "$HOME/.cargo/env"

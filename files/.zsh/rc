@@ -54,9 +54,13 @@ zle -N self-insert-backslash
 bindkey '^p' history-beginning-search-backward
 bindkey '^n' history-beginning-search-forward
 
-ssh-add ~/.ssh/id_dsa 2> /dev/null
-source $HOME/.cargo/env
+# ssh-add ~/.ssh/id_dsa 2> /dev/null
+# source $HOME/.cargo/env
 
-eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-export AWS_VAULT_BACKEND=file
+# eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+# export AWS_VAULT_BACKEND=file
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
