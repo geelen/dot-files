@@ -1,20 +1,26 @@
 setopt prompt_subst
 setopt hist_ignore_dups
 
-. ~/.zsh/prompt
+# . ~/.zsh/prompt
+source ~/code/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 . ~/.zsh/aliases
 . ~/.zsh/git_aliases
 . ~/.zsh/functions
 
 export EDITOR='vim'
-export BROWSER='none'
 
 if [ $(uname -s) = 'Darwin' ]; then
   export LANG="en_AU.UTF-8"
-  export PATH="${HOME}/.cargo/bin:${HOME}/.rbenv/shims:$HOME/.rbenv/bin:$HOME/bin:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/go/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/go/bin"
+  export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/opt/ruby/bin:/opt/homebrew/opt/libpq/bin:/opt/homebrew/opt/sqlite/bin:${HOME}/.cargo/bin:${HOME}/.rbenv/shims:$HOME/.rbenv/bin:$HOME/bin:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/go/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/go/bin"
   export MANPATH="/usr/local/share/man:/usr/X11/man:/usr/share/man"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 else
   export PATH="$HOME/bin:$HOME/.local/bin:$HOME/code/swift-wasm/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin"
+  source "$HOME/.cargo/env"
 fi
 
 # Lines configured by zsh-newuser-install
@@ -47,10 +53,6 @@ bindkey '^' self-insert-backslash
 function self-insert-backslash() { LBUFFER+='\'; zle .self-insert }
 zle -N self-insert-backslash
 
-# source /usr/local/opt/chruby/share/chruby/chruby.sh
-# source /usr/local/share/chruby/auto.sh
-# chruby 2.6.4
-
 bindkey '^p' history-beginning-search-backward
 bindkey '^n' history-beginning-search-forward
 
@@ -64,3 +66,17 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+export DENO_INSTALL="/Users/glen/.deno"
+export PATH="$HOME/bin:$DENO_INSTALL/bin:$PATH"
+
+# TOKENS_DIR="/Users/glen/.scripts"
+# source "$TOKENS_DIR/update_NPM_TOKEN.sh" > /dev/null
+# xportNPM_TOKEN=$NPM_TOKEN
+
+export DOCKER_USERNAME=glen
+export CARGO_NET_GIT_FETCH_WITH_CLI=true
+
+export LDFLAGS="-L/opt/homebrew/opt/sqlite/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/sqlite/include"
+
+export GOPRIVATE=code.cfops.it

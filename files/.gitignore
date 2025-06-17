@@ -6,3 +6,7 @@ dontbackup
 .sass-cache
 npm-debug.log
 .vscode
+.clwb
+.local
+.opencode
+

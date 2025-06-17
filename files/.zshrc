@@ -12,15 +12,3 @@ export PATH="$HOME/.yarn/bin:$PATH"
 # Wasmer
 export WASMER_DIR="/home/glen/.wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
-
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/glen/code/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/glen/code/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/glen/code/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/glen/code/google-cloud-sdk/completion.zsh.inc'; fi
-
-# pnpm
-export PNPM_HOME="/Users/glen/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-# pnpm end

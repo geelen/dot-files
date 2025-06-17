@@ -1,5 +1,5 @@
 # hi glen
-Process.kill :SEGV, $$ if rand < 0.5
+# Process.kill :SEGV, $$ if rand < 0.5
 
 require "irb/completion"
 

@@ -1,11 +1,11 @@
 [user]
 	name = Glen Maddern
-	email = glen@cloudflare.com
+	email = glen@glenmaddern.com
 [color]
 	ui = auto
 [core]
 	excludesfile = /Users/glen/.gitignore
-	pager = "delta --theme=\"TwoDark\" --plus-color=\"#001701\" --plus-emph-color=\"#064000\" --minus-color=\"#240002\" --minus-emph-color=\"#64000E\""
+	pager = "delta --syntax-theme=\"TwoDark\" --plus-style=\"syntax bold #001701\" --plus-emph-style=\"syntax bold #064000\" --minus-style=\"syntax bold #240002\" --minus-emph-style=\"syntax bold #64000E\""
 [github]
 	user = geelen
 [filter "media"]

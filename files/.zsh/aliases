@@ -7,9 +7,25 @@ else
 fi
 
 alias l='ls'
-alias ll='ls -lh'
+# alias ll='ls -lh'
 alias la='ls -a'
 alias lal='ls -lah'
+
+# https://unix.stackexchange.com/a/25329
+alias watch='watch '
+
+# eza
+alias exa='eza --icons'
+alias ll='eza -laTL 1'
+alias ll2='eza -laTL 2'
+alias ll3='eza -laTL 3'
+alias ll4='eza -laTL 4'
+alias tree='ll -L 99'
+
+# cat
+export BAT_THEME="Coldark-Dark"
+alias cat='bat'
+alias ccat='/bin/cat'
 
 alias s='git status -sb $argv; return 0'
 alias d='gd $argv'
@@ -38,7 +54,7 @@ alias rc='rails c'
 alias rake='bundle exec rake'
 alias dbgo='rake db:migrate db:structure:dump db:test:prepare --trace'
 
-alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --console --no-first-run --user-data-dir=$HOME/.config/chrome-test --use-fake-device-for-media-stream --enable-logging --v=1 --vmodule='*third_party/libjingle/*=3,*=0' --unsafely-treat-insecure-origin-as-secure='http://dev.localhost:3000/,http://test_team.dev.localhost:3000/,http://admin.dev.localhost:3000/'"
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --console --no-first-run --user-data-dir=$HOME/.config/chrome-test --disable-web-security"
 alias chrome2="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --console --no-first-run --user-data-dir=$HOME/.config/chrome-test2 --use-fake-device-for-media-stream --enable-logging --v=1 --vmodule='*third_party/libjingle/*=3,*=0' --unsafely-treat-insecure-origin-as-secure='http://dev.localhost:3000/,http://test_team.dev.localhost:3000/,http://admin.dev.localhost:3000/'"
 alias chrome3="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --console --no-first-run --user-data-dir=$HOME/.config/chrome-test3 --enable-logging --v=1 --vmodule='*third_party/libjingle/*=3,*=0' --unsafely-treat-insecure-origin-as-secure='http://dev.localhost:3000/,http://test_team.dev.localhost:3000/,http://admin.dev.localhost:3000/'"
 alias chrome4="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --console --no-first-run --user-data-dir=$HOME/.config/chrome-test4 --enable-logging --v=1 --vmodule='*third_party/libjingle/*=3,*=0' --unsafely-treat-insecure-origin-as-secure='http://dev.localhost:3000/,http://test_team.dev.localhost:3000/,http://admin.dev.localhost:3000/'"
@@ -48,4 +64,40 @@ alias ffnightly="/Applications/FirefoxNightly.app/Contents/MacOS/firefox -profil
 
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
+# Cloudflare aliases
 
+alias make='grc make'
+alias gotest='GOFLAGS=-mod=vendor grc go test -v -tags=integration'
+# alias gotest1='gotest -p 1 -race -count=1 ./test/... -run'
+alias gotest1='GOFLAGS="-mod=vendor -tags=integration" DB_HOST=0.0.0.0 DEV=auth APP_ENV=dev grc go test ./test/integration/ -v -run'
+
+alias cf_proxy='cloudflared access tcp --hostname api.tun.pdx-a.k8s.cfplat.com --url 127.0.0.1:1234'
+alias cf_kubectl='env HTTPS_PROXY=socks5://127.0.0.1:1234 kubectl'
+alias cf_cfsetup='env K8S_HTTPS_PROXY=socks5://127.0.0.1:1234 cfsetup'
+
+alias p='pnpm'
+alias px='pnpm dlx'
+alias pa='pnpm add'
+alias pad='pnpm add -D'
+alias pap='pnpm add -P'
+
+alias b='bun'
+alias ba='bun add'
+alias bad='bun add -d'
+alias bap='bun add -p'
+
+cjq() {
+  curl -s --show-error -o >(jq -Rsr '. as $x | try fromjson catch $x') $@
+}
+
+cacjq() {
+  cloudflared access curl $@ -sN --show-error | jq
+}
+
+cac() {
+  cloudflared access curl $@ -sN --show-error
+}
+
+alias git_log_workerd='for i in $(git log --format=%h | head -n 20); do j=$(git rev-parse $i:deps/workerd); echo "$(git log -n 1 --pretty="format:%Cblue%h%Cred%d%Creset %ar %Cgreen%an%Creset %s" $i --color=always)\n    -> $(cd deps/workerd > /dev/null && git log -n 1 --pretty=format:"%C(bold blue)%h%C(reset) - %an, %C(bold yellow)%ar%C(reset) : %s" $j --color=always)\n"; done'
+
+# alias grup="gf && grh origin/$(git_current_branch)"
