@@ -8,3 +8,32 @@ function tm() {
   else open *.tmproj
   fi
 }
+function eza_ll() {
+  if [ $# -eq 0 ]; then
+      command eza -laTL 1 .
+  else
+      command eza -laTL 1 "$@"
+  fi
+}
+chrome-no-cors() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: chrome-no-cors <url>"
+        return 1
+    fi
+
+    local temp_dir=$(mktemp -d)
+    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+        --disable-web-security \
+        --disable-features=VizDisplayCompositor \
+        --user-data-dir="$temp_dir" \
+        --no-first-run \
+        --no-default-browser-check \
+        --disable-sync \
+        --disable-background-networking \
+        --disable-background-timer-throttling \
+        --disable-backgrounding-occluded-windows \
+        --disable-renderer-backgrounding \
+        --disable-field-trial-config \
+        --disable-ipc-flooding-protection \
+        "$1" > /dev/null 2>&1 &
+}
