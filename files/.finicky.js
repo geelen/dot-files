@@ -5,13 +5,13 @@ export default {
   defaultBrowser: 'Firefox',
   handlers: [
     {
-      match: /npmjs\.com\/auth|scaleft\.com/,
+      match: /npmjs\.com\/auth|scaleft\.com|notion\.so|loom.com/,
       browser: 'Google Chrome',
     },
     {
       match: (url, options) => {
         // console.log({url, options})
-        return options.opener.name.match(/slack|iterm/i)
+        return options.opener.name.match(/slack|iterm|figma/i)
       },
       browser: 'Google Chrome'
     }

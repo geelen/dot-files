@@ -25,3 +25,5 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/Users/glenmaddern/Library/Caches/hermit/pkg/gh-2.74.2/gh auth git-credential
+[url "ssh://git@github.com/groq/"]
+	insteadOf = https://github.com/groq/

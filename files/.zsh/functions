@@ -37,3 +37,23 @@ chrome-no-cors() {
         --disable-ipc-flooding-protection \
         "$1" > /dev/null 2>&1 &
 }
+chrome-isolated() {
+    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+        --user-data-dir="/tmp/isolated-chrome" \
+        --no-first-run \
+        --no-default-browser-check \
+        --disable-sync
+}
+
+git-squash-feature() {
+  # 1. Fetch the latest from the remote to ensure origin/main is up to date
+  git fetch origin && \
+  # 2. Find the common ancestor and reset softly, staging all changes
+  git reset --soft $(git merge-base HEAD origin/main) && \
+  # 3. Commit the staged changes with the message you provide
+  git commit -m "$1"
+}
+
+cjq() {
+  curl -s --show-error -o >(jq -Rsr '. as $x | try fromjson catch $x') $@
+}

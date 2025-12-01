@@ -79,7 +79,9 @@ export CARGO_NET_GIT_FETCH_WITH_CLI=true
 export LDFLAGS="-L/opt/homebrew/opt/sqlite/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/sqlite/include"
 
-export GOPRIVATE=code.cfops.it
-
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+
+export GOPATH=$HOME/go
+export GOROOT=/opt/homebrew/opt/go/libexec
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
