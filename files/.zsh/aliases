@@ -93,7 +93,11 @@ alias git_log_workerd='for i in $(git log --format=%h | head -n 20); do j=$(git 
 # alias grup="gf && grh origin/$(git_current_branch)"
 
 source ~/.config/.env
-alias cc-orion="ANTHROPIC_API_KEY=$GROQ_API_KEY ANTHROPIC_BASE_URL=http://localhost:8080/api/anthropic ANTHROPIC_SMALL_FAST_MODEL=moonshotai/kimi-k2-instruct ANTHROPIC_MODEL=moonshotai/kimi-k2-instruct claude"
-alias cc-groq="ANTHROPIC_API_KEY=$GROQ_API_KEY ANTHROPIC_BASE_URL=https://api.groq.com/anthropic ANTHROPIC_SMALL_FAST_MODEL=moonshotai/kimi-k2-instruct ANTHROPIC_MODEL=moonshotai/kimi-k2-instruct claude"
 
 alias ah='source bin/activate-hermit'
+alias oc='opencode'
+
+# TMUX/SSH aliases for multi-paned, resumable sessions
+alias tt='tmux attach -t main 2>/dev/null || tmux new -s main'
+
+old-history-search() { ssh groq-macbook "grep -i '$1' ~/.zsh_history" }

@@ -5,15 +5,15 @@ export default {
   defaultBrowser: 'Firefox',
   handlers: [
     {
-      match: /npmjs\.com\/auth|scaleft\.com|notion\.so|loom.com/,
-      browser: 'Google Chrome',
+      match: /PaloAltoNetworks|nvidia\.slack/,
+      browser: 'Brave Browser',
     },
     {
       match: (url, options) => {
         // console.log({url, options})
-        return options.opener.name.match(/slack|iterm|figma/i)
+        return options.opener.name.match(/slack|iterm|figma|outlook|teams|globalprotect/i)
       },
-      browser: 'Google Chrome'
+      browser: 'Brave Browser'
     }
   ],
 }

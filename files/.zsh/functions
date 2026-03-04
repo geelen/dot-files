@@ -57,3 +57,12 @@ git-squash-feature() {
 cjq() {
   curl -s --show-error -o >(jq -Rsr '. as $x | try fromjson catch $x') $@
 }
+
+# SSH with TMUX integration for multi-paned, resumable sessions
+tssh() {
+  if [ $# -eq 0 ]; then
+    echo "Usage: tssh user@server"
+    return 1
+  fi
+  ssh "$@" -t 'tmux -CC new-session -A -s main || tmux -CC attach -t main'
+}
