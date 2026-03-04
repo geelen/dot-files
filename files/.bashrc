@@ -1,85 +1,117 @@
-system_name=`uname -s`
+export PATH="$HOME/.local/bin:$PATH"
 
-. ~/.aliases/colours
-. ~/.ps1_color
-
-#git_piece='$(__git_ps1 " \[$color_red\]%s\[$color_none\]")'
-date_piece="\[${color_gray}\]\$(date '+%a %H:%M:%S')\[${color_none}\]"
-export PS1="${date_piece} \u\[${color_ps1}\]@\[${color_none}\]\h \[${color_gray}\]\w\[${git_piece}\]\n\[${color_ps1}\]\$\[${color_none}\] "
-umask 022
-
-if [ $system_name == 'Linux' ]; then
-  [ -f /etc/bash_completion ] && . /etc/bash_completion
-
-  export EDITOR='vim'
-else
-  [ -f /opt/local/etc/bash_completion ] && . /opt/local/etc/bash_completion
-
-  export EDITOR='mate -w'
+# ── Secrets / API tokens ──────────────────────────────────────────
+if [ -f ~/.secrets ]; then
+    set -a
+    . ~/.secrets
+    set +a
 fi
 
-export ARCHFLAGS='-arch i386'
-export MAKEFLAGS='-j4'
-export RUBYLIB="lib:test:$RUBYLIB"
-export GEMS="`gem env gemdir`/gems"
-export HISTSIZE=1000000
+# ── Bail out early if non-interactive (protects scp/rsync/sftp) ──
+[[ $- != *i* ]] && return
 
-bind "set show-all-if-ambiguous On"
+# ── History ──────────────────────────────────────────────────────
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+export HISTCONTROL=ignoreboth:erasedups
+shopt -s histappend
 
-#shopt -s globstar
+# ── Better globbing ──────────────────────────────────────────────
+shopt -s globstar 2>/dev/null
+shopt -s nocaseglob 2>/dev/null
 
-# coloured ls
-if [ "$TERM" != "dumb" ]; then
-  if [ $system_name == 'Linux' ]; then
-    color_option='--color=auto'
+# ── Prompt ───────────────────────────────────────────────────────
+_h=$(hostname -s)
 
-    alias du='du -k --max-depth=1'
-  else
-    color_option='-G'
+# Colors (256-color safe, ASCII safe)
+_c_rst='\[\e[0m\]'
+_c_bold='\[\e[1m\]'
+_c_green='\[\e[38;5;114m\]'
+_c_cyan='\[\e[38;5;80m\]'
+_c_blue='\[\e[38;5;75m\]'
+_c_red='\[\e[38;5;203m\]'
+_c_yellow='\[\e[38;5;220m\]'
+_c_dim='\[\e[38;5;242m\]'
 
-    alias du='du -k -d1'
-    alias top='top -o cpu'
+# Detect GPU machines by the presence of nvidia-smi
+if [[ -n "$SSH_CONNECTION" ]] && command -v nvidia-smi &>/dev/null; then
+    # ── CLUSTER NODE ── cache GPU & job info once at shell startup ─
 
-    alias vi='mate'
-  fi
+    # GPU info (single nvidia-smi call)
+    _gpu_lines=$(nvidia-smi --query-gpu=name --format=csv,noheader)
+    _gpu_name=${_gpu_lines%%$'\n'*}        # first line
+    _gpu_name=${_gpu_name#NVIDIA }         # strip redundant prefix
+    _gpu_count=$(wc -l <<< "$_gpu_lines")
+    _gpu_tag="${_gpu_name} x$(( _gpu_count ))"
+    unset _gpu_lines _gpu_name _gpu_count
 
-  alias ls="ls $color_option"
-  alias ll="ls -lh $color_option"
-  alias la="ls -a $color_option"
-  alias lal="ls -lha $color_option"
+    # SLURM job timing (single scontrol call)
+    _job_start_epoch=""
+    _job_limit_secs=""
+    if [[ -n "$SLURM_JOB_ID" ]]; then
+        _sctl=$(scontrol show job "$SLURM_JOB_ID" 2>/dev/null)
+        _sctl_start=$(grep -oP 'StartTime=\K\S+' <<< "$_sctl")
+        _sctl_tlimit=$(grep -oP 'TimeLimit=\K\S+' <<< "$_sctl")
+        [[ -n "$_sctl_start" ]] && \
+            _job_start_epoch=$(date -d "$_sctl_start" +%s 2>/dev/null)
+        # Parse TimeLimit (formats: MM:SS, HH:MM:SS, D-HH:MM:SS)
+        if [[ -n "$_sctl_tlimit" && "$_sctl_tlimit" != "UNLIMITED" ]]; then
+            _job_limit_secs=0
+            _tl="$_sctl_tlimit"
+            if [[ "$_tl" == *-* ]]; then
+                (( _job_limit_secs += ${_tl%%-*} * 86400 ))
+                _tl="${_tl#*-}"
+            fi
+            IFS=: read -ra _tl_parts <<< "$_tl"
+            case ${#_tl_parts[@]} in
+                3) (( _job_limit_secs += 10#${_tl_parts[0]}*3600 + 10#${_tl_parts[1]}*60 + 10#${_tl_parts[2]} )) ;;
+                2) (( _job_limit_secs += 10#${_tl_parts[0]}*60   + 10#${_tl_parts[1]} )) ;;
+                1) (( _job_limit_secs += 10#${_tl_parts[0]} )) ;;
+            esac
+            unset _tl _tl_parts
+        fi
+        unset _sctl _sctl_start _sctl_tlimit
+    fi
 
-  . ~/.scripts/j.sh
+    # PROMPT_COMMAND: countdown timer with color (pure builtins, no fork)
+    # Color uses raw \001/\002 (readline markers) since it's expanded after PS1 decoding
+    _job_timer=""
+    _gpu_prompt_timer() {
+        if [[ -n "$_job_start_epoch" && -n "$_job_limit_secs" ]]; then
+            local _now _remaining _rh _rm _clr
+            printf -v _now '%(%s)T' -1
+            _remaining=$(( _job_limit_secs - (_now - _job_start_epoch) ))
+            (( _remaining < 0 )) && _remaining=0
+            _rh=$(( _remaining / 3600 )); _rm=$(( (_remaining % 3600) / 60 ))
+            if (( _remaining >= 1800 )); then
+                _clr=$'\001\e[38;5;114m\002'   # green  (>30 min)
+            elif (( _remaining >= 600 )); then
+                _clr=$'\001\e[38;5;220m\002'   # orange (10-30 min)
+            else
+                _clr=$'\001\e[38;5;203m\002'   # red    (<10 min)
+            fi
+            printf -v _job_timer '%s%d:%02d%s' "$_clr" "$_rh" "$_rm" $'\001\e[0m\002'
+        else
+            _job_timer=""
+        fi
+    }
+    PROMPT_COMMAND="_gpu_prompt_timer"
 
+    # Build PS1 — colors baked in now; $_job_timer deferred to each prompt
+    PS1="${_c_dim}--[${_c_rst}${_c_bold}${_c_red}${_h}${_c_rst}"
+    PS1+="${_c_dim} · ${_c_rst}${_c_yellow}${_gpu_tag}${_c_rst}"
+    PS1+='${_job_timer:+'"${_c_dim}"' · '"${_c_rst}"'${_job_timer}}'
+    PS1+="${_c_dim}]--${_c_rst} ${_c_green}\u${_c_rst} ${_c_blue}\w${_c_rst}"
+    PS1+="\n${_c_yellow}\$${_c_rst} "
+
+    unset _gpu_tag
 else
-  # TODO use path_helper to do this properly
-  export PATH=/opt/local/bin:$PATH
+    # ── Jump box / local ── clean and familiar ───────────────────
+    PS1="${_c_green}\u${_c_rst}${_c_dim}@${_c_rst}${_c_cyan}${_h}${_c_rst}${_c_dim}:${_c_rst}${_c_blue}\w${_c_rst}${_c_dim}\$${_c_rst} "
 fi
 
-alias df='df -h'
-alias less='less -R'
+unset _h _c_rst _c_bold _c_green _c_cyan _c_blue _c_red _c_yellow _c_dim
 
-. ~/.aliases/git
-. ~/.aliases/commands
+# ── Source aliases ───────────────────────────────────────────────
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
-export PATH="$HOME/.yarn/bin:$PATH"
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[ -f /Users/glen/src/work/bitgenics/linc-cd/github-pr-ui/node_modules/tabtab/.completions/serverless.bash ] && . /Users/glen/src/work/bitgenics/linc-cd/github-pr-ui/node_modules/tabtab/.completions/serverless.bash
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[ -f /Users/glen/src/work/bitgenics/linc-cd/github-pr-ui/node_modules/tabtab/.completions/sls.bash ] && . /Users/glen/src/work/bitgenics/linc-cd/github-pr-ui/node_modules/tabtab/.completions/sls.bash
-# tabtab source for slss package
-# uninstall by removing these lines or running `tabtab uninstall slss`
-[ -f /Users/glen/src/work/bitgenics/linc-cd/cd/node_modules/tabtab/.completions/slss.bash ] && . /Users/glen/src/work/bitgenics/linc-cd/cd/node_modules/tabtab/.completions/slss.bash
-
-source "$HOME/.cargo/env"
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-. "$HOME/.cargo/env"
-
-eval "$($HOME/.local/bin/mise activate bash 2>/dev/null)" # added by https://mise.run/bash
-
-# peon-ping quick controls
-alias peon="bash /Users/gmaddern/.claude/hooks/peon-ping/peon.sh"
-[ -f /Users/gmaddern/.claude/hooks/peon-ping/completions.bash ] && source /Users/gmaddern/.claude/hooks/peon-ping/completions.bash
