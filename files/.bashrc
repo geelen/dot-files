@@ -33,12 +33,16 @@ _c_red='\[\e[38;5;203m\]'
 _c_yellow='\[\e[38;5;220m\]'
 _c_dim='\[\e[38;5;242m\]'
 
-# Detect GPU machines by the presence of nvidia-smi
-if [[ -n "$SSH_CONNECTION" ]] && command -v nvidia-smi &>/dev/null; then
+# Detect actual GPU nodes (not just hosts where nvidia-smi is installed)
+if [[ -n "$SSH_CONNECTION" ]] \
+   && command -v nvidia-smi &>/dev/null \
+   && _gpu_lines=$(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null) \
+   && [[ -n "${_gpu_lines//[[:space:]]/}" ]] \
+   && [[ "$_gpu_lines" != *"NVIDIA-SMI has failed"* ]] \
+   && [[ "$_gpu_lines" != *"No devices were found"* ]]; then
     # ── CLUSTER NODE ── cache GPU & job info once at shell startup ─
 
-    # GPU info (single nvidia-smi call)
-    _gpu_lines=$(nvidia-smi --query-gpu=name --format=csv,noheader)
+    # GPU info
     _gpu_name=${_gpu_lines%%$'\n'*}        # first line
     _gpu_name=${_gpu_name#NVIDIA }         # strip redundant prefix
     _gpu_count=$(wc -l <<< "$_gpu_lines")
@@ -114,4 +118,3 @@ unset _h _c_rst _c_bold _c_green _c_cyan _c_blue _c_red _c_yellow _c_dim
 
 # ── Source aliases ───────────────────────────────────────────────
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases
-
