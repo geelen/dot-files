@@ -2,18 +2,18 @@
 // Save as ~/.finicky.js
 
 export default {
-  defaultBrowser: 'Firefox',
+  defaultBrowser: 'Brave Browser',
   handlers: [
-    {
-      match: /PaloAltoNetworks|nvidia\.slack/,
-      browser: 'Brave Browser',
-    },
+    // {
+    //   match: /PaloAltoNetworks|nvidia\.slack/,
+    //   browser: 'Brave Browser',
+    // },
     {
       match: (url, options) => {
         // console.log({url, options})
-        return options.opener.name.match(/slack|iterm|figma|outlook|teams|globalprotect/i)
+        return options.opener.name.match(/whatsapp|discord/i)
       },
-      browser: 'Brave Browser'
+      browser: 'Firefox'
     }
   ],
 }

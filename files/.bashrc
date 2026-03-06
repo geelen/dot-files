@@ -1,4 +1,4 @@
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.volta/bin:$PATH"
 
 # ── Secrets / API tokens ──────────────────────────────────────────
 if [ -f ~/.secrets ]; then

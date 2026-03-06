@@ -58,9 +58,9 @@ computelab() {
 }
 
 # Connect to devvm with iTerm2 tmux integration
-# Reattaches to "main" when present, otherwise creates it.
+# Creates or reattaches to a persistent tmux session named "main"
 devvm() {
-    ssh devvm-gmaddern -t "tmux -u -CC attach-session -t main || tmux -u -CC new-session -s main"
+    ssh devvm-gmaddern -t "tmux -u -CC new-session -A -s main"
 }
 
 # opencode
