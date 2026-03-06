@@ -69,6 +69,3 @@ export PATH=/Users/gmaddern/.opencode/bin:$PATH
 # peon-ping quick controls
 alias peon="bash /Users/gmaddern/.claude/hooks/peon-ping/peon.sh"
 [ -f /Users/gmaddern/.claude/hooks/peon-ping/completions.bash ] && source /Users/gmaddern/.claude/hooks/peon-ping/completions.bash
-
-# GitHub token for tools that call GitHub API (e.g. mise github: backends)
-export GITHUB_TOKEN="$(gh auth token 2>/dev/null || true)"
