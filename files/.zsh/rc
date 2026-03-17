@@ -15,9 +15,8 @@ export EDITOR='vim'
 
 if [ $(uname -s) = 'Darwin' ]; then
   export LANG="en_AU.UTF-8"
-  export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/opt/ruby/bin:/opt/homebrew/opt/libpq/bin:/opt/homebrew/opt/sqlite/bin:${HOME}/.cargo/bin:${HOME}/.rbenv/shims:$HOME/.rbenv/bin:$HOME/bin:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/go/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/go/bin"
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/opt/ruby/bin:/opt/homebrew/opt/libpq/bin:/opt/homebrew/opt/sqlite/bin:${HOME}/.cargo/bin:${HOME}/.rbenv/shims:$HOME/.rbenv/bin:$HOME/bin:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/go/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/go/bin"
   export MANPATH="/usr/local/share/man:/usr/X11/man:/usr/share/man"
-  eval "$(/opt/homebrew/bin/brew shellenv)"
 else
   export PATH="$HOME/bin:$HOME/.local/bin:$HOME/code/swift-wasm/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin"
   source "$HOME/.cargo/env"
@@ -34,10 +33,18 @@ unsetopt autocd
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/Users/ben/.zshrc'
+zstyle :compinstall filename "${ZDOTDIR:-$HOME}/.zshrc"
+
+if [[ -d "$HOME/.bun" ]]; then
+  fpath=("$HOME/.bun" $fpath)
+fi
 
 autoload -Uz compinit
-compinit
+if [[ -n "${ZDOTDIR:-$HOME}/.zcompdump"(#qN.mh+24) ]]; then
+  compinit -d "${ZDOTDIR:-$HOME}/.zcompdump"
+else
+  compinit -C -d "${ZDOTDIR:-$HOME}/.zcompdump"
+fi
 setopt complete_in_word
 # End of lines added by compinstall
 

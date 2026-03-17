@@ -22,9 +22,6 @@ export WASMER_DIR="/home/glen/.wasmer"
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
 
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -49,7 +46,7 @@ if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-clou
 eval "$(tree-me shellenv 2>/dev/null)"
 
 # mise (ruby/node/python version manager)
-eval "$(mise activate zsh)"
+eval "$(/opt/homebrew/bin/mise activate zsh --shims)"
 
 # Connect to computelab with iTerm2 tmux integration
 # Creates or reattaches to a persistent tmux session named "main"
