@@ -66,3 +66,35 @@ tssh() {
   fi
   ssh "$@" -t 'tmux -CC new-session -A -s main || tmux -CC attach -t main'
 }
+
+tsh-reissue() {
+  local host="${1:?usage: tsh-reissue SSH_HOST [CALLBACK_PORT]}"
+  local port="${2:-52080}"
+
+  if [[ "$port" != <-> ]] || (( port < 1024 || port > 65535 )); then
+    print -u2 "invalid callback port: $port"
+    return 64
+  fi
+
+  local remote_cmd="
+    set -e
+    tsh login --force \
+      --proxy=nv-stg-hw.teleport.sh:443 \
+      --user=gmaddern@nvidia.com \
+      --ttl=480 \
+      --browser=none \
+      --bind-addr=127.0.0.1:${port} \
+      --callback=http://127.0.0.1:${port}
+    tsh kube login hou2-prod1
+    kubectl get --raw=/readyz >/dev/null
+    echo
+    tsh status
+  "
+
+  ssh -tt \
+    -o ExitOnForwardFailure=yes \
+    -o ServerAliveInterval=15 \
+    -o ServerAliveCountMax=3 \
+    -L "127.0.0.1:${port}:127.0.0.1:${port}" \
+    "$host" "$remote_cmd"
+}
