@@ -98,3 +98,62 @@ tsh-reissue() {
     -L "127.0.0.1:${port}:127.0.0.1:${port}" \
     "$host" "$remote_cmd"
 }
+
+# Keep local SSH forwards alive independently of remote-tmux.
+# Usage: remote-tunnel <ssh-host> <port|local-port:remote-port> [...]
+# Run in a dedicated terminal; Ctrl-C stops reconnecting.
+remote-tunnel() (
+    emulate -L zsh
+    local host="$1" spec local_port remote_port rc
+    local -a forwards
+    local -A seen
+
+    if (( $# < 2 )) || [[ -z "$host" || "$host" == -* ]]; then
+        print -u2 'Usage: remote-tunnel <ssh-host> <port|local-port:remote-port> [...]'
+        return 2
+    fi
+    shift
+
+    for spec in "$@"; do
+        local_port="${spec%%:*}"
+        remote_port="${spec#*:}"
+        if [[ "$local_port" != <-> || "$remote_port" != <-> ]] ||
+           (( ${#local_port} > 5 || ${#remote_port} > 5 )); then
+            print -u2 "Invalid forward: $spec (expected port or local-port:remote-port)"
+            return 2
+        fi
+        local_port=$(( 10#$local_port ))
+        remote_port=$(( 10#$remote_port ))
+        if (( local_port < 1 || local_port > 65535 || remote_port < 1 || remote_port > 65535 )); then
+            print -u2 "Invalid forward: $spec (ports must be 1–65535)"
+            return 2
+        fi
+        if [[ -n "${seen[$local_port]}" ]]; then
+            print -u2 "Duplicate local port: $local_port"
+            return 2
+        fi
+        seen[$local_port]=1
+        forwards+=(-L "127.0.0.1:${local_port}:localhost:${remote_port}")
+    done
+
+    # Subshell keeps these traps isolated from the interactive shell.
+    trap 'exit 130' INT
+    trap 'exit 143' TERM
+    trap 'exit 129' HUP
+    while true; do
+        command ssh -N -T \
+            -o ControlMaster=no -o ControlPath=none -o ControlPersist=no \
+            -o ForkAfterAuthentication=no \
+            -o ExitOnForwardFailure=yes \
+            -o ServerAliveInterval=15 -o ServerAliveCountMax=3 \
+            -o TCPKeepAlive=yes -o ConnectTimeout=15 \
+            "${forwards[@]}" "$host"
+        rc=$?
+        (( rc == 129 || rc == 130 || rc == 143 )) && return "$rc"
+        print -u2 "Tunnel to $host ended (exit $rc); retrying in 2 seconds. Ctrl-C to stop."
+        sleep 2
+    done
+)
+
+# Claude Code desktop forwards to the development VM and its container.
+alias claude-tunnel='remote-tunnel devvm-gmaddern 4173 4174 2222:22 2223:29854'
