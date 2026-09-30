@@ -105,11 +105,15 @@ tsh-reissue() {
 remote-tunnel() (
     emulate -L zsh
     local host="$1" spec local_port remote_port rc
-    local -a forwards
+    local -a forwards mappings
     local -A seen
 
+    _remote_tunnel_log() {
+        print -ru2 -- "[$(date '+%Y-%m-%d %H:%M:%S %Z')] $*"
+    }
+
     if (( $# < 2 )) || [[ -z "$host" || "$host" == -* ]]; then
-        print -u2 'Usage: remote-tunnel <ssh-host> <port|local-port:remote-port> [...]'
+        _remote_tunnel_log 'Usage: remote-tunnel <ssh-host> <port|local-port:remote-port> [...]'
         return 2
     fi
     shift
@@ -119,41 +123,53 @@ remote-tunnel() (
         remote_port="${spec#*:}"
         if [[ "$local_port" != <-> || "$remote_port" != <-> ]] ||
            (( ${#local_port} > 5 || ${#remote_port} > 5 )); then
-            print -u2 "Invalid forward: $spec (expected port or local-port:remote-port)"
+            _remote_tunnel_log "Invalid forward: $spec (expected port or local-port:remote-port)"
             return 2
         fi
         local_port=$(( 10#$local_port ))
         remote_port=$(( 10#$remote_port ))
         if (( local_port < 1 || local_port > 65535 || remote_port < 1 || remote_port > 65535 )); then
-            print -u2 "Invalid forward: $spec (ports must be 1–65535)"
+            _remote_tunnel_log "Invalid forward: $spec (ports must be 1–65535)"
             return 2
         fi
         if [[ -n "${seen[$local_port]}" ]]; then
-            print -u2 "Duplicate local port: $local_port"
+            _remote_tunnel_log "Duplicate local port: $local_port"
             return 2
         fi
         seen[$local_port]=1
+        mappings+=("127.0.0.1:${local_port} -> ${host}:localhost:${remote_port}")
         forwards+=(-L "127.0.0.1:${local_port}:localhost:${remote_port}")
     done
 
+    for spec in "${mappings[@]}"; do
+        _remote_tunnel_log "Forward: $spec"
+    done
+
     # Subshell keeps these traps isolated from the interactive shell.
-    trap 'exit 130' INT
-    trap 'exit 143' TERM
-    trap 'exit 129' HUP
+    trap '_remote_tunnel_log "Stopped."; exit 130' INT
+    trap '_remote_tunnel_log "Stopped."; exit 143' TERM
+    trap '_remote_tunnel_log "Stopped."; exit 129' HUP
     while true; do
+        _remote_tunnel_log "Connecting to $host…"
         command ssh -N -T \
             -o ControlMaster=no -o ControlPath=none -o ControlPersist=no \
             -o ForkAfterAuthentication=no \
+            -o PermitLocalCommand=yes \
+            -o 'LocalCommand=echo "[$(date +"%%Y-%%m-%%d %%H:%%M:%%S %%Z")] Connected; local forwards ready."' \
             -o ExitOnForwardFailure=yes \
             -o ServerAliveInterval=15 -o ServerAliveCountMax=3 \
             -o TCPKeepAlive=yes -o ConnectTimeout=15 \
-            "${forwards[@]}" "$host"
+            "${forwards[@]}" "$host" 2> >(
+                while IFS= read -r line; do
+                    _remote_tunnel_log "$line"
+                done
+            )
         rc=$?
-        (( rc == 129 || rc == 130 || rc == 143 )) && return "$rc"
-        print -u2 "Tunnel to $host ended (exit $rc); retrying in 2 seconds. Ctrl-C to stop."
+        if (( rc == 129 || rc == 130 || rc == 143 )); then
+            _remote_tunnel_log "Stopped (exit $rc)."
+            return "$rc"
+        fi
+        _remote_tunnel_log "Tunnel to $host ended (exit $rc); retrying in 2 seconds. Ctrl-C to stop."
         sleep 2
     done
 )
-
-# Claude Code desktop forwards to the development VM and its container.
-alias claude-tunnel='remote-tunnel devvm-gmaddern 4173 4174 2222:22 2223:29854'
